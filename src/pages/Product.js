@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 
 import Sidebar from '../components/Sidebar'
 import Typography from '@mui/material/Typography';
+import ProductList from '../components/products/ProductList';
 
 
 
@@ -15,8 +16,8 @@ const Product = () => {
 
 <Sidebar/>
 <Box component="main" sx={{flexGrow: 1,p: 3}}>
+<ProductList/>
 
-<h1>Product</h1>
 </Box>
 
 
