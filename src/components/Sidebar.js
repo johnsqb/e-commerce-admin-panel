@@ -14,8 +14,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HomeIcon from '@mui/icons-material/Home';
+import CategoryIcon from '@mui/icons-material/Category';
 import { useNavigate } from 'react-router-dom';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddIcon from '@mui/icons-material/Add';
 
 import { useSelector } from 'react-redux';
 
@@ -146,7 +148,7 @@ export default function Sidebar() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon /> 
+                  <CategoryIcon /> 
                 </ListItemIcon>
                 <ListItemText primary="Category" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -167,7 +169,7 @@ export default function Sidebar() {
                     justifyContent: 'center',
                   }}
                 >
-                  <InboxIcon /> 
+                  <AddIcon /> 
                 </ListItemIcon>
                 <ListItemText primary="Sub-Category" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

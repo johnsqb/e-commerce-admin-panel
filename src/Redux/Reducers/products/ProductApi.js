@@ -6,10 +6,10 @@ import axios from 'axios';
 
 //  const jwtToken = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IlJPTEVfU0VMTEVSIiwic3ViIjoiam9obnMiLCJpYXQiOjE3MjMxODU5MDIsImV4cCI6MTcyMzE4OTUwMn0.59L-KaRt4pVc_s2u54N-pEfyWfzhkhc8N-Xth1prd5E'
 
-export  const getCategory = createAsyncThunk('categories/fetchCategories',async()=>{
+export  const getProduct = createAsyncThunk('products/fetchProducts',async()=>{
 
  try{
- const response = await axios.get("http://localhost:8080/api/categories/getall",{
+ const response = await axios.get("http://localhost:8080/api/products/getall",{
 
    //  headers:{
    //     Authorization: `Bearer ${jwtToken}`

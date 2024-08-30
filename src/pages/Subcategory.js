@@ -3,9 +3,13 @@ import Box from '@mui/material/Box';
 
 import Sidebar from '../components/Sidebar'
 import Typography from '@mui/material/Typography';
+import SubCategoryList from '../components/subCategory/SubCategoryList';
 
 
 const Subcategory = () => {
+    
+    
+    
     return (
         <>
            <Box height={30}/>
@@ -14,8 +18,7 @@ const Subcategory = () => {
 
                 <Sidebar/>
                 <Box component="main" sx={{flexGrow: 1,p: 3}}>
-
-                <h1>Sub-category</h1>
+                <SubCategoryList/>
                 </Box>
 
             </Box>
