@@ -1,13 +1,13 @@
-import { Grid, IconButton, Typography } from '@mui/material'
-import React, { useState } from 'react'
+  import CloseIcon from "@mui/icons-material/Close";
+import { Grid, IconButton, Typography } from '@mui/material';
 import Box from "@mui/material/Box";
-import CloseIcon from "@mui/icons-material/Close";
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {editCategory} from '../../Redux/Reducers/categories/EditCategoryApi'
-import { getCategory } from '../../Redux/Reducers/categories/CategoryApi';
 import Swal from 'sweetalert2';
+import { getCategory } from '../../Redux/Reducers/categories/CategoryApi';
+import { editCategory } from '../../Redux/Reducers/categories/EditCategoryApi';
 
 
 const EditCategory = (props) => {

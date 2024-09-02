@@ -1,9 +1,7 @@
-import React from 'react'
 import Box from '@mui/material/Box';
+import React from 'react';
 
-import Sidebar from '../components/Sidebar'
-import Typography from '@mui/material/Typography';
-
+import Sidebar from '../components/Sidebar';
 
 
 const Product = () => {

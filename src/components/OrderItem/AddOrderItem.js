@@ -6,41 +6,44 @@ import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { addCategory } from '../../Redux/Reducers/categories/AddCategoriesApi';
-import { getCategory } from '../../Redux/Reducers/categories/CategoryApi';
+import { addOrderItem } from '../../Redux/Reducers/orderItem/AddOrderItemApi';
+import { getOrderItem } from '../../Redux/Reducers/orderItem/OrderItemApi';
 
 
 
-const AddCategory = ({closeEvent}) => {
+const AddOrderItem = ({closeEvent}) => {
 
- const [categoryName, setCategoryName] = useState('');
-  const [description, setDescription] = useState('');
+ const [OrderItemQuantity, setOrderItemQuantity] = useState('');
+  const [status, setStatus] = useState('');
+  
+
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    const newCategory = {
-      name: categoryName,
-      description: description,
+    const newOrderItem = {
+      quantity: OrderItemQuantity,
+      status: status,
+      
     };
 
     try {
-        await dispatch(addCategory(newCategory)); // Dispatch the action to add the category
-        console.log(newCategory);
+        await dispatch(addOrderItem(newOrderItem)); // Dispatch the action to add the category
+        console.log(newOrderItem);
         
-        dispatch(getCategory()); // Fetch the latest categories to update the table
+        dispatch(getOrderItem()); // Fetch the latest categories to update the table
         console.log("not updated");
         
       closeEvent(); // Close the dialog after successful submission
 
       Swal.fire({
         icon: 'success',
-        title: 'Category Added',
-        text: 'The category has been successfully added.',
+        title: 'OrderItem Added',
+        text: 'The OderItem has been successfully added.',
       });
 
     
     } catch (error) {
-      console.error("Failed to add category:", error);
+      console.error("Failed to add OderItem:", error);
     }
   };
 
@@ -48,7 +51,7 @@ const AddCategory = ({closeEvent}) => {
     <>
        <Box sx={{ m:2}}/>
        <Typography variant='h5' align='center'>
-        Add category
+        Add orderItem
        </Typography>
        <IconButton 
         style={{ position: "absolute",top:"0",right : "0"}}
@@ -59,16 +62,16 @@ const AddCategory = ({closeEvent}) => {
         <Box height={15}/>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-            <TextField id="outlined-basic" label="Category Name" variant="outlined" size='large' sx={{ minWidth: "100%" }}
-                 value={categoryName}
-                 onChange={(e) => setCategoryName(e.target.value)}/>
+            <TextField id="outlined-basic" label="OrderItemQuantity" variant="outlined" size='large' sx={{ minWidth: "100%" }}
+                 value={OrderItemQuantity}
+                 onChange={(e) => setOrderItemQuantity(e.target.value)}/>
             
             </Grid>
 
             <Grid item xs={12}>
-            <TextField id="outlined-basic" label="Description" variant="outlined" size='large' sx={{ minWidth: "100%" }}
-                     value={description}
-                     onChange={(e) => setDescription(e.target.value)}
+            <TextField id="outlined-basic" label="Status" variant="outlined" size='large' sx={{ minWidth: "100%" }}
+                     value={status}
+                     onChange={(e) => setStatus(e.target.value)}
                    />
             </Grid>
 
@@ -89,4 +92,4 @@ const AddCategory = ({closeEvent}) => {
   )
 }
 
-export default AddCategory
+export default AddOrderItem

@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 
 import Sidebar from '../components/Sidebar'
-import Typography from '@mui/material/Typography';
+
 
 
 const Subcategory = () => {

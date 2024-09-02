@@ -1,5 +1,4 @@
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
+// import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,16 +16,20 @@ import Typography from "@mui/material/Typography";
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategory } from '../../Redux/Reducers/categories/CategoryApi';
+import Swal from 'sweetalert2';
+
+import { getOrderItem } from '../../Redux/Reducers/orderItem/OrderItemApi';
 import StatusCode from "../../Redux/Reducers/utils/StatusCode";
 
 import Stack from '@mui/material/Stack';
 
 import { Tooltip } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import AddCategory from './AddCategory';
-import DeleteCategory from './DeleteCategory';
-import EditCategory from './EditCategory';
+// import AddOrderItem from './AddOrderItem';
+// import axios from "axios";
+import { editOrderItem } from '../../Redux/Reducers/orderItem/EditOrderItemApi';
+import EditOrderItem from './EditOrderItem';
+
 
 
 
@@ -35,52 +38,35 @@ import EditCategory from './EditCategory';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 50 ,width: '4%' },
-    { id: 'name', label: 'Category Name', minWidth: 50,width: '10%'  },
-    { id: 'description', label: 'Description', minWidth: 50, align: 'center',width: '15%'  },
+    { id: 'products', label: 'Product Name', minWidth: 50, width: '10%' }, 
+    { id: 'total', label: 'Total', minWidth: 50, width: '10%' }, 
+    { id: 'orderDetails', label: 'Delivery Address', minWidth: 50, width: '10%' }, 
+    { id: 'quantity', label: 'Quantity', minWidth: 50,width: '10%'  },
+
+    { id: 'status', label: 'Status', minWidth: 50, align: 'center',width: '15%'  },
     { id: 'createdAt', label: 'Created At', minWidth: 50, align: 'center',width: '17%'  },
-    { id: 'deletedAt', label: 'Deleted At', minWidth: 50, align: 'center',width: '17%'  },
+
     { id: 'action', label: 'Action', minWidth: 50, align: 'center',width: '17%'  },
+
   ];
 
-// function createData(name, code, population, size) {
-//   const density = population / size;
-//   return { name, code, population, size, density };
-// }
 
-// const rows = [
-//   createData('India', 'IN', 1324171354, 3287263),
-//   createData('China', 'CN', 1403500365, 9596961),
-//   createData('Italy', 'IT', 60483973, 301340),
-//   createData('United States', 'US', 327167434, 9833520),
-//   createData('Canada', 'CA', 37602103, 9984670),
-//   createData('Australia', 'AU', 25475400, 7692024),
-//   createData('Germany', 'DE', 83019200, 357578),
-//   createData('Ireland', 'IE', 4857000, 70273),
-//   createData('Mexico', 'MX', 126577691, 1972550),
-//   createData('Japan', 'JP', 126317000, 377973),
-//   createData('France', 'FR', 67022000, 640679),
-//   createData('United Kingdom', 'GB', 67545757, 242495),
-//   createData('Russia', 'RU', 146793744, 17098246),
-//   createData('Nigeria', 'NG', 200962417, 923768),
-//   createData('Brazil', 'BR', 210147125, 8515767),
-// ];
-
-export default function CategoryList() {
+export default function OrderItemList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [filteredOrderItem, setFilteredOrderItem] = useState([]);
+  //  const [open, setOpen] = useState(false);
   const [editopen, setEditopen] = useState(false);
 
   const [formid, setFormid] = useState('');
 
-  const handleOpen = () => setOpen(true);
+  // const handleOpen = () => setOpen(true);
   const handleEditOpen = () => setEditopen(true);
   const handleEditClose = () => setEditopen(false);
 
 
-  const handleClose = () => setOpen(false);
+  //  const handleClose = () => setOpen(false);
 
   const style = {
     position: 'absolute',
@@ -94,32 +80,31 @@ export default function CategoryList() {
     p: 4,
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+ 
 
   const dispatch = useDispatch();
 
-    const {categories,status } = useSelector(state => state.category);
+    const {orderItems,status } = useSelector(state => state.orderItem);
     // console.log();
     // const id =props.parentId;
 
     // const filteredProducts = products.filter(product => (product.parentCategory.id===id));
 
-    console.log(categories);
+    console.log(orderItems);
     
     
     useEffect(()=>{
 
-       dispatch(getCategory());
+       dispatch(getOrderItem());
         
   
  },[dispatch]);
+ useEffect(() => {
+  console.log('Updated orderItems:', orderItems); // Debugging line
+  if (orderItems.length > 0) {
+      setFilteredOrderItem(orderItems);
+  }
+}, [orderItems]);
 
 
 //  useEffect(() => {
@@ -128,45 +113,88 @@ export default function CategoryList() {
 
 
 useEffect(() => {
-   console.log(filteredCategories);
+   console.log(filteredOrderItem);
    
-}, [filteredCategories]);
+}, [filteredOrderItem]);
 
 useEffect(() => {
-  if (categories.length > 0) {
-    setFilteredCategories(categories);
+  if (orderItems.length > 0) {
+    setFilteredOrderItem(orderItems);
   }
-}, [categories]);
+}, [orderItems]);
 
 
 const filterData = (v) => {
 
   
   if (v) {
-    setFilteredCategories([v]);
+    setFilteredOrderItem([v]);
     
   } else {
-    setFilteredCategories(categories);
+    setFilteredOrderItem(orderItems);
   }
   
   
 };
+const handleChangePage = (event, newPage) => {
+  setPage(newPage);
+};
 
-const editData = (id,name,description) => {
-  const data = {
-    id : id,
-    name : name,
-    description : description
-  };
-  setFormid(data);
-  handleEditOpen();
+const handleChangeRowsPerPage = (event) => {
+  setRowsPerPage(+event.target.value);
+  setPage(0);
+};
+// const handleStatusUpdate = async (orderItemId, newStatus) => {
+//   try {
+//       const response = await axios.put(`/api/orderItem/updateStatus/${orderItemId}?status=${newStatus}`, {
+          
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//       });
+
+//       if (!response.ok) {
+//           throw new Error('Failed to update status');
+//       }
+
+//       // Optionally refetch or update local state to reflect changes
+//       dispatch(getOrderItem()); // Assuming this will refetch the updated list
+//   } catch (error) {
+//       console.error('Error updating status:', error);
+//   }
+// };
+
+
+const handleStatusUpdate = async (id,status)  => {
+  
+  
+  // setFormid(updatedData);
+  try {
+
+    await dispatch(editOrderItem({ orderItemId: id, status })); // Use name.id to pass the ID
+     dispatch(getOrderItem()); // Fetch the latest categories to update the table
+    
+
+    Swal.fire({
+      icon: 'success',
+      title: 'OrderItem Updated',
+      text: 'The orderItem has been successfully updated.',
+    });
+  } catch (error) {
+    console.error("Failed to update orderItem:", error);
+  }
 };
 
 
-const handleDelete = () => {
-  dispatch(getCategory()); // Fetch the updated categories list after deletion
-  filterData(); // Reset the search/filter after deletion
-};
+  // dispatch(editOrderItem(updatedData));
+
+
+
+
+// const handleDelete = () => {
+//   dispatch(getOrderItem()); // Fetch the updated categories list after deletion
+//   filterData(); // Reset the search/filter after deletion
+// };
 // const DeleteCategory = ({ id }) => {
 //   const dispatch = useDispatch();
 
@@ -207,16 +235,16 @@ const handleDelete = () => {
     <>
 
       <div>
-        <Modal
+        {/* <Modal
           open={open}
-          // onClose={handleClose}
+          onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
-       >
-        <Box sx={style}>
-         <AddCategory closeEvent={handleClose} />
-        </Box>
-      </Modal>
+       > */}
+        {/* <Box sx={style}>
+         <AddOrderItem closeEvent={handleClose} />
+        </Box> */}
+      {/* </Modal> */}
 
       <Modal
           open={editopen}
@@ -225,7 +253,7 @@ const handleDelete = () => {
           aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-         <EditCategory closeEvent={handleEditClose} data={formid}/>
+         <EditOrderItem closeEvent={handleEditClose} data={formid}/>
         </Box>
       </Modal>
     </div>
@@ -237,7 +265,7 @@ const handleDelete = () => {
             component="div"
             sx={{ padding: "20px" }}
           >
-            Category List
+            Order List
           </Typography>
           <Divider />
           <Box height={10} />
@@ -245,22 +273,22 @@ const handleDelete = () => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={categories}
+              options={orderItems}
               sx={{ width: 300 }}
               onChange={(e, v) => filterData(v)}
-              getOptionLabel={(categories) => categories.name || ""}
+              getOptionLabel={(orderItem) => orderItem.products.name || ""}
               renderInput={(params) => (
-                <TextField {...params} size="small" label="Search category" />
+                <TextField {...params} size="small" label="Search OrderItem" />
               )}
             />
-            <Typography
+            {/* <Typography
               variant="h6"
               component="div"
               sx={{ flexGrow: 1 }}
-            ></Typography>
-            <Button variant="contained" endIcon={<AddCircleIcon />} onClick={handleOpen}>
-              Add Category
-            </Button>
+            ></Typography> */}
+            {/* <Button variant="contained" endIcon={<AddCircleIcon />} onClick={handleOpen}>
+              Add OrderItem
+            </Button> */}
           </Stack>
 
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -281,36 +309,67 @@ const handleDelete = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredCategories
+            {filteredOrderItem
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((category) => {
+              .map((orderItem) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={category.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={orderItem.id}>
                     {columns.map((column) => {
-                      const value = category[column.id];
-                      if (column.id === 'action') {
-                        return (
-                            <TableCell key={column.id} align={column.align}>
-                                <Stack spacing={14} direction="row">
-                                  <Tooltip  title="Edit">
-                                  
-                                    <EditIcon
-                                        style={{
-                                            fontSize: "20px",
-                                            color: "blue",
-                                            cursor: "pointer",
-                                            marginLeft:"50px",
-                                            
+                      let value = orderItem[column.id];
+                      
+                      if(column.id==='total'){
+                        value = orderItem.orderDetails
+                        ? orderItem.orderDetails.total:'0'
+                      
+                      }
+                      console.log(orderItem.orderDetails);
+                     if (column.id === 'orderDetails') {
+                    value = orderItem.orderDetails?.users?.addresses?.[0]?.address_line_2 || '0';
+                    console.log(value);
+                    }
+                    console.log(orderItem.orderDetails?.users?.addresses?.[0]?.address_line_2);
+                    // Also log address_line_2 directly
+                      // If addresses is an array, access it by index
+                      console.log(orderItem.products);
+                     if (column.id === 'products') {
+                    value = orderItem.products?orderItem.products.name:'0';
+                    console.log(value);
+                    }
+                    if (column.id === 'status') {
+                      value = value || "Pending";
+                      console.log(value);
+                    }
 
-                                        }}
-
-                                        onClick={() => {
-                                          editData(category.id,category.name,category.description)
-                                        }}
-                                    />
-                                    </Tooltip>
-
-                                    <DeleteCategory id={category.id} onDelete={handleDelete} />
+                    // Also log address_line_2 directly
+                    console.log(orderItem.products?.[0]?.name);
+                    if (column.id === 'action') {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <Stack spacing={2} direction="row" justifyContent="center">
+                            <Tooltip title="Mark as Delivered">
+                              <Button
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                onClick={() => handleStatusUpdate(orderItem.id, "Delivered")}
+                              >
+                                Delivered
+                              </Button>
+                            </Tooltip>
+                            <Tooltip title="Mark as cancelled">
+                              <Button
+                                variant="contained"
+                                color="warning"
+                                size="small"
+                                onClick={() =>{
+                                
+                                  handleStatusUpdate(orderItem.id, "Cancelled")
+                                } }
+                              >
+                                cancelled
+                              </Button>
+                            </Tooltip>
+                                    {/* <DeleteOrderItem id={orderItem.id} onDelete={handleDelete} /> */}
                                     {/* <Tooltip  title="Delete">
 
                                     <DeleteIcon
@@ -351,7 +410,7 @@ const handleDelete = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={categories.length}
+        count={orderItems.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -361,4 +420,6 @@ const handleDelete = () => {
     </>
   );
 }
+
+
 

@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import React from 'react';
-
-import CategoryList from '../components/Category/CategoryList';
+import OrderItemList from '../components/OrderItem/OrderItemList';
 import Sidebar from '../components/Sidebar';
 
 
-const Category = () => {
+
+const OrderItem = () => {
     return (
         <>
           <Box height={70}/>
@@ -14,7 +14,7 @@ const Category = () => {
 
             <Sidebar/>
             <Box component="main" sx={{flexGrow: 1,p: 3}}>
-            <CategoryList/>
+            <OrderItemList/>
             </Box>
 
 
@@ -26,4 +26,4 @@ const Category = () => {
     }
     
 
-export default Category
+export default OrderItem

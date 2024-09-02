@@ -1,21 +1,22 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LocalGroceryStoreRoundedIcon from '@mui/icons-material/LocalGroceryStoreRounded';
+import HomeIcon from '@mui/icons-material/Home';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import HomeIcon from '@mui/icons-material/Home';
+import { styled, useTheme } from '@mui/material/styles';
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { useSelector } from 'react-redux';
 
@@ -148,6 +149,8 @@ export default function Sidebar() {
                 >
                   <InboxIcon /> 
                 </ListItemIcon>
+                
+                
                 <ListItemText primary="Category" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
@@ -171,7 +174,30 @@ export default function Sidebar() {
                 </ListItemIcon>
                 <ListItemText primary="Sub-Category" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
+              
             </ListItem>
+            {/* New ListItem for Orders */}
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => navigate("/orderItem")}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Order" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+            
         </List>
 
       </Drawer>

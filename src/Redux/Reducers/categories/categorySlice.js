@@ -1,11 +1,11 @@
 
-import {  createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 import StatusCode from "../utils/StatusCode";
-import {getCategory} from './CategoryApi';
 import { addCategory } from './AddCategoriesApi';
+import { getCategory } from './CategoryApi';
 import { initialState } from './CategoryInitialState';
-import { editCategory } from './EditCategoryApi';
 import { deleteCategory } from './DeleteCategoryApi';
+import { editCategory } from './EditCategoryApi';
 
 const categorySlice = createSlice({
 
