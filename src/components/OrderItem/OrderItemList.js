@@ -44,7 +44,7 @@ const columns = [
     { id: 'quantity', label: 'Quantity', minWidth: 50,width: '10%'  },
 
     { id: 'status', label: 'Status', minWidth: 50, align: 'center',width: '15%'  },
-    { id: 'createdAt', label: 'Created At', minWidth: 50, align: 'center',width: '17%'  },
+
 
     { id: 'action', label: 'Action', minWidth: 50, align: 'center',width: '17%'  },
 
@@ -110,6 +110,10 @@ export default function OrderItemList() {
 //  useEffect(() => {
 //   setFilteredCategories(categories);
 // }, [categories]);
+useEffect(() => {
+  console.log('Fetched orderItems:', orderItems);
+}, [orderItems]);
+
 
 
 useEffect(() => {
